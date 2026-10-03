@@ -18,7 +18,7 @@ export const site = {
 };
 
 export const links = {
-  email: 'hello@meerthika.dev', // TODO: replace with your real email
+  email: 'meerthikasuniverse@gmail.com',
   github: GITHUB,
   linkedin: 'https://www.linkedin.com/in/', // TODO: your LinkedIn URL
   medium: 'https://medium.com/', // TODO: your Medium profile URL
@@ -55,24 +55,24 @@ export const beliefs = [
 export const about = {
   lead: 'I’m an AI engineer who learns by taking systems apart and rebuilding them by hand.',
   body: [
-    'I graduated as the department Gold Medalist in Computer Science from Kamaraj College of Engineering & Technology, and I spent the last few years going deep on the layers most people skip — kernels, distributed logs, compilers — before climbing back up to neural networks.',
+    'I graduated as the department Gold Medalist in Computer Science from Kamaraj College of Engineering & Technology, passed JLPT N4 in Japanese, and spent the last few years going deep on the layers most people skip — kernels, distributed logs, compilers — before climbing back up to neural networks.',
     'Today I build AI systems that are grounded, fast and trustworthy: RAG pipelines over live data, Transformers written from first principles, and lately, efficient models through pruning and sparsity (MIT 6.5940 is my current obsession). I founded RootSprout to make open source approachable, contribute to CNCF’s Flatcar Linux, and I’m an Aspire Leaders Program Fellow.',
   ],
   stats: [
     { n: '200+', label: 'students taught open source' },
     { n: '900+', label: 'YouTube learners' },
-    { n: '4×', label: 'hackathon winner' },
+    { n: '5×', label: 'hackathon winner' },
     { n: '15+', label: 'tech communities' },
   ],
   skills: [
-    'PyTorch', 'Transformers', 'LLMs', 'RAG', 'Model Pruning', 'TinyML',
-    'Python', 'Go', 'C', 'Java', 'Spring Boot', 'Kafka',
+    'JLPT N4', 'PyTorch', 'Transformers', 'LLMs', 'RAG', 'Model Pruning', 'TinyML',
+    'Blockchain Security', 'Python', 'Go', 'C', 'Java', 'Spring Boot', 'Kafka',
     'AWS', 'Kubernetes', 'LLVM', 'Elasticsearch',
   ],
   polaroids: [
-    { doodle: 'portrait', caption: 'me, mid-debug ☕', tilt: -6 },
-    { doodle: 'stage', caption: 'speaking @ women in tech, TN', tilt: 4 },
-    { doodle: 'medal', caption: 'gold medal · rank 1', tilt: -2 },
+    { image: '/images/debug_me.jpg', caption: 'me, mid-debug ☕', tilt: -6 },
+    { image: '/images/women_in_tech_me.jpg', caption: 'speaking @ women in tech, TN', tilt: 4 },
+    { image: '/images/gold_medal_me.jpg', caption: 'gold medal · rank 1', tilt: -2 },
   ],
 };
 
@@ -284,6 +284,12 @@ export const wins = [
     note: 'Highest CGPA in the department — first class with distinction.',
     badge: 'medal',
     feature: true,
+  },
+  {
+    title: 'Winner · Cybersecurity Hackathon',
+    event: 'Blockchain Security',
+    note: 'Built a decentralized security and vulnerability auditing platform.',
+    badge: 'trophy',
   },
   {
     title: 'Winner · TechDivathon',
