@@ -1,0 +1,70 @@
+---
+import { railIcons } from '../data/railIcons.js';
+
+const CYCLES = 4;
+const left = Array.from({ length: CYCLES }, () => railIcons).flat();
+// Right rail uses a shifted order so the two edges never mirror each other.
+const shifted = [...railIcons.slice(5), ...railIcons.slice(0, 5)];
+const right = Array.from({ length: CYCLES }, () => shifted).flat();
+---
+<div class="rail rail--left" aria-hidden="true">
+  <div class="rail__track" data-rail="0.32">
+    {left.map((icon) => (
+      <span class="tile">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <g filter="url(#rough-sm)" set:html={icon} />
+        </svg>
+      </span>
+    ))}
+  </div>
+</div>
+<div class="rail rail--right" aria-hidden="true">
+  <div class="rail__track" data-rail="0.42">
+    {right.map((icon) => (
+      <span class="tile">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <g filter="url(#rough-sm)" set:html={icon} />
+        </svg>
+      </span>
+    ))}
+  </div>
+</div>
+
+<style>
+  .rail {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: var(--rail);
+    z-index: 40;
+    overflow: hidden;
+    padding: 0 calc(var(--rail-gap) / 1.5);
+  }
+  .rail--left { left: 0; }
+  .rail--right { right: 0; }
+  .rail__track {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    padding-top: var(--rail-gap);
+    will-change: transform;
+  }
+  .tile {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    width: 100%;
+    border-radius: clamp(5px, calc(var(--rail) * 0.18), var(--r-tile));
+    background: var(--lime);
+    color: var(--ink);
+    box-shadow: inset 0 0 0 1.5px rgba(20, 24, 31, 0.85), inset 0 -3px 0 rgba(20, 24, 31, 0.18);
+    transition: transform var(--dur) var(--ease-spring);
+  }
+  .tile svg { width: 72%; height: 72%; }
+  .tile:hover { transform: scale(1.1) rotate(-3deg); }
+
+  @media (max-width: 640px) {
+    .tile { box-shadow: inset 0 0 0 1px rgba(20, 24, 31, 0.8); }
+    .tile svg { width: 80%; height: 80%; }
+  }
+</style>

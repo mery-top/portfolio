@@ -1,0 +1,131 @@
+---
+const items = [
+  { href: '#about', label: 'about' },
+  { href: '#work', label: 'work' },
+  { href: '#lab', label: 'lab' },
+  { href: '#writing', label: 'writing' },
+  { href: '#connect', label: 'connect' },
+];
+---
+<header class="nav" data-nav>
+  <nav class="nav__inner" aria-label="Primary">
+    <a href="#top" class="nav__logo" aria-label="Meerthika — back to top">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
+        <g filter="url(#rough-sm)">
+          <path d="M20 4 q16 0 16 16 q0 16 -16 16 q-16 0 -16 -16 q0 -15 15 -16" />
+          <path d="M14 15 v3 M26 15 v3" />
+          <path d="M12.5 24 q7.5 7 15 0" />
+        </g>
+      </svg>
+    </a>
+    <ul class="nav__links">
+      {items.map((it) => (
+        <li><a href={it.href} data-nav-link>{it.label}</a></li>
+      ))}
+    </ul>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="mobile-menu" data-burger>
+      <span class="sr-only">Open menu</span>
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+        <path class="b1" d="M6 10 q10 -1.5 20 0" /><path class="b2" d="M6 16.5 q9 1 20 -0.5" /><path class="b3" d="M6 23 q11 -1 20 0.5" />
+      </svg>
+    </button>
+  </nav>
+
+  <div id="mobile-menu" class="sheet graph" data-sheet hidden>
+    <span class="tape tape--top" style="--tape-rot:-4deg"></span>
+    <p class="sheet__label mono">table of contents</p>
+    <ol>
+      {items.map((it, i) => (
+        <li><a href={it.href} data-sheet-link><span class="mono">p.0{i + 1}</span> {it.label}</a></li>
+      ))}
+    </ol>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    z-index: 60;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: calc(100vw - 2 * var(--rail) - 24px);
+  }
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    gap: clamp(18px, 3vw, 40px);
+    padding: 10px 26px;
+    border-radius: 999px;
+    border: 1.5px solid transparent;
+    transition: background-color var(--dur) var(--ease-out), border-color var(--dur), backdrop-filter var(--dur), opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+  }
+  :global(.js) .nav__inner { opacity: 0; transform: translateY(-14px); }
+  :global(.js) .nav.is-ready .nav__inner { opacity: 1; transform: none; }
+  .nav.is-scrolled .nav__inner {
+    background-color: rgba(13, 17, 23, 0.82);
+    border-color: rgba(233, 237, 227, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .nav.is-hidden .nav__inner { opacity: 0; transform: translateY(-120%); pointer-events: none; }
+
+  .nav__logo { color: var(--lime); width: 30px; height: 30px; display: grid; place-items: center; transition: transform var(--dur) var(--ease-spring); }
+  .nav__logo:hover { transform: rotate(-14deg) scale(1.12); }
+  .nav__logo svg { width: 28px; height: 28px; }
+
+  .nav__links { display: flex; gap: clamp(18px, 2.6vw, 36px); }
+  .nav__links a {
+    position: relative;
+    font-family: var(--f-hand);
+    font-size: 21px;
+    color: var(--on-dark);
+    padding: 4px 2px 8px;
+    transition: color var(--dur-fast);
+  }
+  .nav__links a::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 6px;
+    background: var(--wave-lime) repeat-x 0 0 / 20px 6px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 380ms var(--ease-out);
+  }
+  .nav__links a:hover, .nav__links a.is-active { color: var(--lime); }
+  .nav__links a:hover::after, .nav__links a.is-active::after { clip-path: inset(0 0 0 0); }
+
+  .nav__burger { display: none; width: 40px; height: 40px; color: var(--on-dark); place-items: center; }
+  .nav__burger svg { width: 30px; height: 30px; }
+  .nav__burger path { transition: transform var(--dur) var(--ease-out), opacity var(--dur); transform-origin: 16px 16px; }
+  .nav__burger[aria-expanded='true'] .b1 { transform: translateY(6.5px) rotate(45deg); }
+  .nav__burger[aria-expanded='true'] .b2 { opacity: 0; }
+  .nav__burger[aria-expanded='true'] .b3 { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .sheet {
+    position: absolute;
+    top: calc(100% + 16px);
+    right: 0;
+    width: min(300px, calc(100vw - 2 * var(--rail) - 24px));
+    padding: 34px 26px 26px;
+    border-radius: var(--r-paper);
+    box-shadow: var(--shadow-lift);
+    color: var(--ink);
+    transform: rotate(1.2deg);
+    animation: sheet-in 380ms var(--ease-spring);
+  }
+  .sheet__label { color: var(--ink-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: .12em; }
+  .sheet ol { display: grid; gap: 6px; }
+  .sheet a { display: flex; align-items: baseline; gap: 14px; font-family: var(--f-hand); font-size: 30px; color: var(--ink); }
+  .sheet a .mono { color: var(--lime-ink); }
+  @keyframes sheet-in { from { opacity: 0; transform: translateY(-10px) rotate(-2deg); } }
+
+  @media (max-width: 760px) {
+    .nav { left: auto; right: calc(var(--rail) + 10px); transform: none; }
+    .nav__links { display: none; }
+    .nav__burger { display: grid; }
+    .nav__inner { padding: 6px 8px 6px 14px; gap: 10px; }
+    .nav:not(.is-scrolled) .nav__inner { background-color: rgba(13, 17, 23, 0.6); }
+  }
+</style>

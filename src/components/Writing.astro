@@ -1,0 +1,190 @@
+---
+import { publications, posts } from '../data/content.js';
+import Doodle from './Doodle.astro';
+---
+
+<section id="writing" class="section">
+  <div class="container">
+    <div class="section-head" data-reveal style="--i:1">
+      <span class="kicker">
+        <span>publications & field notes</span>
+        <span class="mono">// 06</span>
+      </span>
+      <h2 class="display">Writing & <em>Research.</em></h2>
+      <p class="sub blurb">Books, journal papers, and deep dives on system architecture & efficient AI.</p>
+    </div>
+
+    <!-- Publications Row (Book & Paper) -->
+    <div class="pubs-grid" data-reveal style="--i:2">
+      {publications.map((pub) => (
+        <article class="pub-card paper graph">
+          <span class="tape tape--top" style="--tape-rot: -1.5deg;"></span>
+          <div class="pub-badge">
+            <Doodle name={pub.kind === 'book' ? 'book' : 'sparkle'} stroke={2.2} />
+            <span class="mono pub-kind-tag">{pub.kind}</span>
+          </div>
+
+          <div class="pub-body">
+            <span class="pub-where mono">{pub.where}</span>
+            <h3 class="pub-title serif">{pub.title}</h3>
+            {pub.subtitle && <p class="pub-sub hand">{pub.subtitle}</p>}
+            <p class="pub-note blurb">{pub.note}</p>
+          </div>
+
+          <div class="pub-action">
+            <a href={pub.href} target="_blank" rel="noopener noreferrer" class="btn btn--ghost">
+              <span>read {pub.kind} →</span>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Field Notes / Medium Posts Stack -->
+    <div class="posts-section" data-reveal style="--i:3">
+      <h3 class="posts-heading hand">featured field notes & articles:</h3>
+      <div class="posts-stack">
+        {posts.map((post) => (
+          <article class="post-item paper">
+            <div class="post-meta">
+              <span class="post-series mono">{post.series}</span>
+              <span class="post-date mono">{post.date}</span>
+            </div>
+            <h4 class="post-title serif">{post.title}</h4>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pubs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(24px, 4vw, 40px);
+    margin-bottom: clamp(48px, 6vw, 72px);
+  }
+
+  .pub-card {
+    padding: clamp(28px, 4vw, 40px);
+    border: 1px solid rgba(20, 24, 31, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    transition: transform var(--dur) var(--ease-spring), box-shadow var(--dur) var(--ease-out);
+  }
+
+  .pub-card:hover {
+    transform: translateY(-6px) scale(1.015);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .pub-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--lime-dark);
+  }
+
+  .pub-badge svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .pub-kind-tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    background: rgba(110, 154, 31, 0.12);
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .pub-where {
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+  }
+
+  .pub-title {
+    font-size: clamp(22px, 2.2vw, 30px);
+    color: var(--ink);
+    line-height: 1.2;
+    margin-top: 4px;
+  }
+
+  .pub-sub {
+    font-size: 20px;
+    color: var(--lime-dark);
+    margin-top: 2px;
+  }
+
+  .pub-note {
+    color: var(--ink-soft);
+    font-size: 17px;
+    margin-top: 8px;
+  }
+
+  .pub-action {
+    margin-top: auto;
+    padding-top: 12px;
+  }
+
+  .posts-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .posts-heading {
+    font-size: 26px;
+    color: var(--lime);
+  }
+
+  .posts-stack {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+
+  .post-item {
+    padding: 18px 22px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border: 1px solid rgba(20, 24, 31, 0.06);
+    transition: transform var(--dur) var(--ease-spring), box-shadow var(--dur) var(--ease-out);
+  }
+
+  .post-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card);
+  }
+
+  .post-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--ink-muted);
+  }
+
+  .post-series {
+    color: var(--cobalt-ink);
+    font-weight: 600;
+  }
+
+  .post-title {
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  @media (max-width: 800px) {
+    .pubs-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

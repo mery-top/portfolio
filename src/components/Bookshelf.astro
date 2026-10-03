@@ -1,0 +1,175 @@
+---
+import { books } from '../data/content.js';
+---
+
+<section id="bookshelf" class="section">
+  <div class="container">
+    <div class="section-head" data-reveal style="--i:1">
+      <span class="kicker">
+        <span>reading log & library</span>
+        <span class="mono">// 07</span>
+      </span>
+      <h2 class="display">The <em>Bookshelf.</em></h2>
+      <p class="sub blurb">A peek into what shapes my thinking — sci-fi, systems, physics & life strategy.</p>
+    </div>
+
+    <!-- Wooden Shelf Strip -->
+    <div class="shelf-wrapper" data-reveal style="--i:2">
+      <div class="shelf-books">
+        {books.map((b, idx) => (
+          <div
+            class:list={['book-spine', `tone-${b.tone}`]}
+            style={`--h: ${b.h}px;`}
+            tabindex="0"
+          >
+            <div class="spine-text">
+              <span class="book-title serif">{b.title}</span>
+              <span class="book-author hand">{b.author}</span>
+            </div>
+
+            <!-- Hover Popover Note -->
+            <div class="book-popover paper">
+              <span class="popover-title serif">{b.title}</span>
+              <span class="popover-author mono">by {b.author}</span>
+              <div class="popover-rating">
+                {'★'.repeat(b.rating)}{'☆'.repeat(5 - b.rating)}
+              </div>
+              <p class="popover-note blurb">"{b.note}"</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <!-- Wooden Ledge -->
+      <div class="shelf-ledge" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .shelf-wrapper {
+    position: relative;
+    padding-top: 40px;
+    padding-bottom: 24px;
+    margin-top: 20px;
+  }
+
+  .shelf-books {
+    display: flex;
+    align-items: flex-end;
+    gap: clamp(6px, 1.2vw, 14px);
+    overflow-x: auto;
+    padding-inline: 16px;
+    padding-bottom: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--lime) transparent;
+  }
+
+  .book-spine {
+    position: relative;
+    flex-shrink: 0;
+    width: clamp(34px, 4vw, 48px);
+    height: var(--h, 90px);
+    border-radius: 4px 4px 1px 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: -2px 0 6px rgba(0,0,0,0.4), inset -1px 0 2px rgba(255,255,255,0.2);
+    transition: transform var(--dur) var(--ease-spring), filter var(--dur);
+    transform-origin: bottom center;
+  }
+
+  .book-spine:hover, .book-spine:focus-visible {
+    transform: translateY(-16px) scale(1.05);
+    z-index: 20;
+    filter: brightness(1.1);
+  }
+
+  /* Color Tones */
+  .tone-ink { background: #1b2330; color: #e9ede3; border-left: 2px solid #5b7cff; }
+  .tone-sage { background: #dde3d6; color: #14181f; border-left: 2px solid #6e9a1f; }
+  .tone-lime { background: #b8f25b; color: #14181f; border-left: 2px solid #14181f; }
+  .tone-paper { background: #e9ede3; color: #14181f; border-left: 2px solid #5b7cff; }
+  .tone-cobalt { background: #3450d6; color: #e9ede3; border-left: 2px solid #b8f25b; }
+
+  .spine-text {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    max-height: 80%;
+    user-select: none;
+  }
+
+  .book-title {
+    font-size: 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .book-author {
+    font-size: 13px;
+    opacity: 0.8;
+  }
+
+  /* Hover Popover */
+  .book-popover {
+    position: absolute;
+    bottom: calc(100% + 14px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px) scale(0.95);
+    width: 220px;
+    padding: 16px;
+    border-radius: 6px;
+    box-shadow: var(--shadow-lift);
+    border: 1.5px solid var(--lime-dark);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-spring);
+    z-index: 30;
+    color: var(--ink);
+  }
+
+  .book-spine:hover .book-popover, .book-spine:focus-visible .book-popover {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .popover-title {
+    font-size: 18px;
+    display: block;
+    line-height: 1.2;
+  }
+
+  .popover-author {
+    font-size: 11px;
+    color: var(--ink-muted);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .popover-rating {
+    color: #eab308;
+    font-size: 14px;
+    margin-top: 6px;
+  }
+
+  .popover-note {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+    line-height: 1.35;
+  }
+
+  /* Wooden Ledge */
+  .shelf-ledge {
+    height: 16px;
+    background: linear-gradient(180deg, #4A3525 0%, #2D1F15 100%);
+    border-radius: 4px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5), inset 0 2px 0 rgba(255,255,255,0.15);
+    border-bottom: 2px solid #1c130c;
+  }
+</style>

@@ -1,0 +1,126 @@
+---
+import { wins } from '../data/content.js';
+import Doodle from './Doodle.astro';
+---
+
+<section id="trophies" class="section">
+  <div class="container">
+    <div class="section-head" data-reveal style="--i:1">
+      <span class="kicker">
+        <span>achievements & awards</span>
+        <span class="mono">// 05</span>
+      </span>
+      <h2 class="display">Trophies & <em>Honors.</em></h2>
+      <p class="sub blurb">Gold medal academic record and high-stakes hackathon victories.</p>
+    </div>
+
+    <div class="trophies-grid">
+      {wins.map((w, idx) => (
+        <div
+          class:list={['trophy-card paper graph', w.feature && 'trophy-card--gold']}
+          data-reveal
+          style={`--i: ${idx + 2};`}
+        >
+          {w.feature && <span class="tape tape--top" style="--tape-rot: -3deg;"></span>}
+
+          <div class="trophy-badge">
+            <Doodle name={w.badge} stroke={2.2} />
+          </div>
+
+          <div class="trophy-info">
+            <span class="trophy-event mono">{w.event}</span>
+            <h3 class="trophy-title serif">{w.title}</h3>
+            <p class="trophy-note blurb">{w.note}</p>
+            {w.href && (
+              <a href={w.href} target="_blank" rel="noopener noreferrer" class="link-hand trophy-link">
+                watch demo / details →
+              </a>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .trophies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: clamp(20px, 3vw, 32px);
+  }
+
+  .trophy-card {
+    padding: 28px 24px;
+    border: 1px solid rgba(20, 24, 31, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    transition: transform var(--dur) var(--ease-spring), box-shadow var(--dur) var(--ease-out);
+  }
+
+  .trophy-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .trophy-card--gold {
+    grid-column: 1 / -1;
+    background-color: #F8FBEF;
+    border: 2px solid var(--lime-dark);
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    align-items: center;
+    gap: 24px;
+    padding: 32px 36px;
+  }
+
+  .trophy-badge {
+    width: 56px;
+    height: 56px;
+    color: var(--lime-dark);
+    flex-shrink: 0;
+  }
+
+  .trophy-card--gold .trophy-badge {
+    width: 80px;
+    height: 80px;
+  }
+
+  .trophy-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .trophy-event {
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .trophy-title {
+    font-size: clamp(20px, 2vw, 26px);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .trophy-note {
+    color: var(--ink-soft);
+    font-size: 16px;
+  }
+
+  .trophy-link {
+    margin-top: 8px;
+    font-size: 18px;
+  }
+
+  @media (max-width: 760px) {
+    .trophy-card--gold {
+      grid-template-columns: 1fr;
+      padding: 24px;
+    }
+  }
+</style>

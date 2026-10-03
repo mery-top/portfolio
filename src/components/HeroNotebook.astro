@@ -1,0 +1,335 @@
+---
+import HeroScene from './HeroScene.astro';
+import { site } from '../data/content.js';
+---
+
+<section id="top" class="hero-section">
+  <div class="notebook-wrapper" data-hero-notebook>
+    <!-- Leather/Lime Notebook Cover flap (animates rotateX from closed to open) -->
+    <div class="notebook-cover" aria-hidden="true">
+      <div class="cover-texture"></div>
+      <div class="cover-spine"></div>
+      <div class="cover-bookmark"></div>
+    </div>
+
+    <!-- Inside Notebook Page (Graph Paper) -->
+    <div class="notebook-page graph">
+      <!-- Torn Tape corners at bottom -->
+      <span class="tape tape--bottom-left" style="--tape-rot: -6deg;"></span>
+      <span class="tape tape--bottom-right" style="--tape-rot: 4deg;"></span>
+      
+      <!-- Curled page corner effect -->
+      <div class="page-curl" aria-hidden="true"></div>
+
+      <div class="hero-grid">
+        <!-- Left Side: Content & Typography -->
+        <div class="hero-content">
+          <!-- Handwritten Signature -->
+          <div class="signature" data-reveal style="--i:1">
+            <span>{site.signature}</span>
+          </div>
+
+          <!-- Role Label -->
+          <div class="role-wrapper" data-reveal style="--i:2">
+            <span class="role-label">{site.role}</span>
+          </div>
+
+          <!-- Main Headline (Word by Word reveal) -->
+          <h1 class="headline display" data-hero-headline>
+            <span class="word">Intelligence</span>
+            <span class="word">should</span>
+            <span class="word">feel</span>
+            <span class="word"><em class="hl-text">human.</em></span>
+          </h1>
+
+          <!-- Meta line with live clock -->
+          <div class="meta-line mono" data-reveal style="--i:4">
+            <span class="dot-live"></span>
+            <span>{site.city} • {site.gmt}</span>
+            <span class="divider">•</span>
+            <span id="hero-clock" class="clock">--:--:-- IST</span>
+          </div>
+        </div>
+
+        <!-- Right Side: Hand-drawn Illustration -->
+        <div class="hero-illustration-container" data-reveal style="--i:3">
+          <HeroScene />
+        </div>
+      </div>
+
+      <!-- Below the fold lead-in -->
+      <div class="below-fold" data-reveal style="--i:5">
+        <a href="#beliefs" class="scroll-down-link">
+          <span class="blurb">3 things I strongly believe in</span>
+          <svg class="arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M19 12l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    padding-top: clamp(60px, 8vw, 100px);
+    padding-bottom: 40px;
+    perspective: 1200px;
+  }
+
+  .notebook-wrapper {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 20px 20px 8px 8px;
+    box-shadow: var(--shadow-lift);
+    transform-style: preserve-3d;
+  }
+
+  /* Notebook cover opening animation */
+  .notebook-cover {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    background: #5A7E28; /* Fabric/leather green */
+    border: 4px solid var(--lime);
+    border-radius: 20px 20px 8px 8px;
+    transform-origin: top center;
+    transition: transform 900ms var(--ease-out), opacity 400ms 500ms;
+    pointer-events: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  .cover-texture {
+    position: absolute;
+    inset: 0;
+    background-image: var(--leather);
+    opacity: 0.6;
+  }
+  .cover-spine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 16px;
+    background: #3B5418;
+    border-bottom: 2px solid var(--lime);
+  }
+
+  :global(.js) .notebook-wrapper:not(.is-open) .notebook-cover {
+    transform: rotateX(0deg);
+  }
+  :global(.js) .notebook-wrapper.is-open .notebook-cover {
+    transform: rotateX(-105deg);
+    opacity: 0;
+  }
+
+  /* Notebook page */
+  .notebook-page {
+    position: relative;
+    padding: clamp(32px, 5vw, 64px) clamp(24px, 4vw, 56px) 40px;
+    border-radius: 18px 18px 6px 6px;
+    border: 3px solid var(--lime);
+    overflow: hidden;
+    color: var(--ink);
+  }
+
+  .page-curl {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, transparent 50%, rgba(20, 24, 31, 0.15) 50%, var(--paper-shade) 55%);
+    box-shadow: -3px -3px 5px rgba(0,0,0,0.1);
+    pointer-events: none;
+    border-top-left-radius: 4px;
+  }
+
+  .tape--bottom-left {
+    bottom: -10px;
+    left: 40px;
+  }
+  .tape--bottom-right {
+    bottom: -10px;
+    right: 70px;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(24px, 4vw, 48px);
+    align-items: center;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .signature {
+    font-family: var(--f-script);
+    font-size: clamp(48px, 6vw, 76px);
+    color: var(--lime-dark);
+    transform: rotate(-3deg);
+    line-height: 1;
+    margin-left: -6px;
+  }
+
+  .role-wrapper {
+    margin-top: -8px;
+  }
+
+  .role-label {
+    color: var(--ink-muted);
+    background: rgba(110, 154, 31, 0.12);
+    padding: 4px 12px;
+    border-radius: 4px;
+    border-left: 3px solid var(--lime-dark);
+  }
+
+  .headline {
+    font-size: var(--t-hero);
+    line-height: 1.05;
+    margin-top: 8px;
+    color: var(--ink);
+  }
+
+  .headline .word {
+    display: inline-block;
+    margin-right: 0.22em;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+  }
+
+  :global(.js) .notebook-wrapper.is-open .headline .word {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  :global(.js) .notebook-wrapper.is-open .headline .word:nth-child(1) { transition-delay: 300ms; }
+  :global(.js) .notebook-wrapper.is-open .headline .word:nth-child(2) { transition-delay: 450ms; }
+  :global(.js) .notebook-wrapper.is-open .headline .word:nth-child(3) { transition-delay: 600ms; }
+  :global(.js) .notebook-wrapper.is-open .headline .word:nth-child(4) { transition-delay: 750ms; }
+
+  :global(:not(.js)) .headline .word {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hl-text {
+    font-style: italic;
+    color: var(--lime-dark);
+    position: relative;
+    display: inline-block;
+  }
+  .hl-text::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: -2px;
+    right: -2px;
+    height: 10px;
+    background: var(--lime);
+    z-index: -1;
+    opacity: 0.8;
+    transform: rotate(-1deg);
+    border-radius: 2px;
+  }
+
+  .meta-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink-muted);
+    font-size: 13px;
+    margin-top: 12px;
+  }
+
+  .dot-live {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
+  }
+
+  .divider { opacity: 0.4; }
+  .clock {
+    color: var(--lime-dark);
+    font-weight: 600;
+  }
+
+  .hero-illustration-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .below-fold {
+    margin-top: clamp(32px, 4vw, 56px);
+    display: flex;
+    justify-content: center;
+    border-top: 1px dashed rgba(20, 24, 31, 0.15);
+    padding-top: 24px;
+  }
+
+  .scroll-down-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink-muted);
+    transition: color var(--dur-fast), transform var(--dur-fast);
+  }
+
+  .scroll-down-link:hover {
+    color: var(--lime-dark);
+    transform: translateY(3px);
+  }
+
+  .arrow-down {
+    width: 18px;
+    height: 18px;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(5px); }
+    60% { transform: translateY(3px); }
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .hero-illustration-container {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .notebook-page {
+      padding: 24px 18px 28px;
+    }
+    .signature {
+      font-size: 44px;
+    }
+    .headline {
+      font-size: 38px;
+    }
+    .meta-line {
+      flex-wrap: wrap;
+    }
+  }
+</style>

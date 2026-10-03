@@ -1,0 +1,34 @@
+---
+import Doodle from './Doodle.astro';
+
+interface Props {
+  name: string;
+  top?: string;
+  left?: string;
+  right?: string;
+  bottom?: string;
+  w?: number;
+  dur?: number;
+  delay?: number;
+  rot?: number;
+  drift?: number;
+  /** 'wide' = only on very wide screens, 'desk' = hidden on tablet */
+  hide?: 'wide' | 'desk';
+}
+const { name, top, left, right, bottom, w = 96, dur = 8, delay = 0, rot = 0, drift = 0.06, hide } = Astro.props;
+const style = [
+  top && `top:${top}`,
+  left && `left:${left}`,
+  right && `right:${right}`,
+  bottom && `bottom:${bottom}`,
+  `--w:${w}px`,
+  `--dur:${dur}s`,
+  `--delay:${-delay}s`,
+  `--rot:${rot}deg`,
+].filter(Boolean).join(';');
+---
+<div class:list={['float-doodle', hide && `float-doodle--${hide}`]} style={style} data-drift={drift} aria-hidden="true">
+  <div class="float-doodle__bob">
+    <Doodle name={name} class="float-doodle__svg" filter="chalk" stroke={2.2} />
+  </div>
+</div>

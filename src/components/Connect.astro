@@ -1,0 +1,141 @@
+---
+import { links, site } from '../data/content.js';
+import Doodle from './Doodle.astro';
+import FloatingDoodle from './FloatingDoodle.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer id="connect" class="section footer-section">
+  <FloatingDoodle name="plane" top="-40px" right="60px" w={90} dur={8} rot={12} />
+
+  <div class="container">
+    <div class="connect-box" data-reveal style="--i:1">
+      <div class="connect-head">
+        <span class="kicker hand" style="color: var(--lime); font-size: 24px;">let's talk</span>
+        <h2 class="display connect-title">
+          Let's build something that thinks. <em>Together.</em>
+        </h2>
+        <p class="blurb connect-sub">
+          Whether it's an AI model, a distributed system, open-source collaboration, or just a good discussion on operating systems — my inbox is open.
+        </p>
+      </div>
+
+      <!-- Main CTA Button -->
+      <div class="cta-row" data-reveal style="--i:2">
+        <a href={`mailto:${links.email}`} class="btn btn--cta">
+          <span>say hello</span>
+          <Doodle name="sparkle" stroke={2.2} />
+        </a>
+      </div>
+
+      <!-- Social Links Grid with Doodle Arrows -->
+      <div class="social-grid" data-reveal style="--i:3">
+        <div class="social-item">
+          <Doodle name="arrow" class="arrow-doodle" stroke={2.0} />
+          <a href={`mailto:${links.email}`} class="link-hand">email ({links.email})</a>
+        </div>
+        <div class="social-item">
+          <Doodle name="arrow" class="arrow-doodle" stroke={2.0} />
+          <a href={links.github} target="_blank" rel="noopener noreferrer" class="link-hand">github (@mery-top)</a>
+        </div>
+        <div class="social-item">
+          <Doodle name="arrow" class="arrow-doodle" stroke={2.0} />
+          <a href={links.linkedin} target="_blank" rel="noopener noreferrer" class="link-hand">linkedin</a>
+        </div>
+        <div class="social-item">
+          <Doodle name="arrow" class="arrow-doodle" stroke={2.0} />
+          <a href={links.medium} target="_blank" rel="noopener noreferrer" class="link-hand">medium articles</a>
+        </div>
+      </div>
+
+      <!-- Footer Bottom Line -->
+      <div class="footer-bottom mono">
+        <span>Built by hand (and a few GPUs). © {year} {site.name}</span>
+        <span class="location-tag">{site.city}</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-section {
+    position: relative;
+    padding-bottom: clamp(60px, 8vw, 100px);
+  }
+
+  .connect-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: clamp(32px, 5vw, 48px);
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .connect-head {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .connect-title {
+    font-size: clamp(40px, 6vw, 84px);
+    color: var(--on-dark);
+    line-height: 1.05;
+  }
+
+  .connect-title em {
+    color: var(--lime);
+  }
+
+  .connect-sub {
+    color: var(--on-dark-muted);
+    font-size: clamp(18px, 1.6vw, 22px);
+    max-width: 600px;
+  }
+
+  .btn--cta {
+    font-size: 26px;
+    padding: 16px 40px;
+  }
+
+  .social-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px 40px;
+    margin-top: 16px;
+  }
+
+  .social-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .arrow-doodle {
+    width: 24px;
+    height: 24px;
+    color: var(--lime);
+  }
+
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px 32px;
+    font-size: 12px;
+    color: var(--on-dark-muted);
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px dashed rgba(233, 237, 227, 0.15);
+    width: 100%;
+  }
+
+  .location-tag {
+    color: var(--lime);
+  }
+</style>

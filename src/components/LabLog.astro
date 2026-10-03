@@ -1,0 +1,161 @@
+---
+import { experience } from '../data/content.js';
+---
+
+<section id="lab" class="section">
+  <div class="container">
+    <div class="section-head" data-reveal style="--i:1">
+      <span class="kicker">
+        <span>lab log & journey</span>
+        <span class="mono">// 02</span>
+      </span>
+      <h2 class="display">Where systems met <em>production.</em></h2>
+      <p class="sub blurb">A chronological record of roles, internships, open-source work and community contributions.</p>
+    </div>
+
+    <!-- Ruled notebook page container -->
+    <div class="log-notebook paper ruled" data-reveal style="--i:2">
+      <span class="tape tape--top" style="--tape-rot: 1.5deg;"></span>
+      
+      <div class="log-entries">
+        {experience.map((item, idx) => (
+          <div class="log-row">
+            <!-- Margin date -->
+            <div class="log-margin">
+              <span class="log-date mono">{item.when}</span>
+              <span class="log-kind hand">{item.kind}</span>
+            </div>
+
+            <!-- Log content -->
+            <div class="log-content">
+              <div class="log-header">
+                <h3 class="log-title serif">{item.role}</h3>
+                <span class="log-org mono">@ {item.org}</span>
+              </div>
+              <ul class="log-points">
+                {item.points.map((pt) => (
+                  <li>
+                    <span class="bullet" aria-hidden="true">↳</span>
+                    <span set:html={pt} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .log-notebook {
+    position: relative;
+    padding: clamp(32px, 4vw, 56px) clamp(20px, 3vw, 44px);
+    border: 1px solid rgba(20, 24, 31, 0.1);
+    --margin: clamp(140px, 20vw, 220px);
+  }
+
+  .log-entries {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+
+  .log-row {
+    display: grid;
+    grid-template-columns: var(--margin) 1fr;
+    gap: clamp(20px, 3vw, 36px);
+    align-items: start;
+    position: relative;
+  }
+
+  .log-row:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: -18px;
+    left: calc(var(--margin) + 10px);
+    right: 0;
+    height: 1px;
+    border-bottom: 1px dashed rgba(20, 24, 31, 0.12);
+  }
+
+  .log-margin {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-right: 12px;
+  }
+
+  .log-date {
+    font-size: 13px;
+    color: var(--lime-dark);
+    font-weight: 600;
+  }
+
+  .log-kind {
+    font-size: 17px;
+    color: var(--ink-muted);
+  }
+
+  .log-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .log-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px 16px;
+  }
+
+  .log-title {
+    font-size: clamp(22px, 2vw, 26px);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .log-org {
+    font-size: 13px;
+    color: var(--cobalt-ink);
+    background: rgba(91, 124, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .log-points {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .log-points li {
+    display: flex;
+    gap: 10px;
+    align-items: first baseline;
+  }
+
+  .bullet {
+    color: var(--lime-dark);
+    font-weight: bold;
+  }
+
+  @media (max-width: 760px) {
+    .log-notebook {
+      --margin: 0px;
+      background-image: var(--noise-dark);
+    }
+    .log-row {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .log-row:not(:last-child)::after {
+      left: 0;
+    }
+  }
+</style>

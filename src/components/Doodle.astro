@@ -1,0 +1,29 @@
+---
+import { doodles } from '../data/doodles.js';
+
+interface Props {
+  name: keyof typeof doodles | string;
+  class?: string;
+  label?: string;
+  filter?: 'chalk' | 'rough' | 'none';
+  stroke?: number;
+}
+const { name, class: cls = '', label, filter = 'rough', stroke = 2.4 } = Astro.props;
+const inner = (doodles as Record<string, string>)[name] ?? '';
+const filterAttr = filter === 'none' ? undefined : `url(#${filter})`;
+---
+<svg
+  class:list={['doodle-svg', cls]}
+  viewBox="0 0 100 100"
+  fill="none"
+  stroke="currentColor"
+  stroke-width={stroke}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+  focusable="false"
+>
+  <g filter={filterAttr} set:html={inner} />
+</svg>

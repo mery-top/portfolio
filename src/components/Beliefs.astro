@@ -1,0 +1,103 @@
+---
+import { beliefs } from '../data/content.js';
+import Doodle from './Doodle.astro';
+---
+
+<section id="beliefs" class="section">
+  <div class="container">
+    <div class="beliefs-grid">
+      {beliefs.map((b, idx) => (
+        <article
+          class="belief-card paper graph"
+          style={`--rot: ${b.tilt}deg;`}
+          data-reveal
+          style={`--i: ${idx + 1}; --rot: ${b.tilt}deg;`}
+        >
+          <!-- Washi tape at top -->
+          <span class="tape tape--top" style={`--tape-rot: ${idx % 2 === 0 ? '-3deg' : '4deg'};`}></span>
+
+          <div class="card-header">
+            <span class="num hand">{b.n}</span>
+            <div class="doodle-wrap">
+              <Doodle name={b.doodle} stroke={2.2} />
+            </div>
+          </div>
+
+          <h3 class="belief-text serif">
+            "{b.text}"
+          </h3>
+
+          <p class="belief-note blurb">
+            {b.note}
+          </p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .beliefs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(24px, 3.5vw, 40px);
+    padding-top: 10px;
+  }
+
+  .belief-card {
+    padding: clamp(28px, 4vw, 40px) clamp(24px, 3vw, 32px);
+    transform: rotate(var(--rot, 0deg));
+    transition: transform var(--dur) var(--ease-spring), box-shadow var(--dur) var(--ease-out);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border: 1px solid rgba(20, 24, 31, 0.08);
+  }
+
+  .belief-card:hover {
+    transform: rotate(0deg) translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-lift);
+    z-index: 5;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .num {
+    font-size: 38px;
+    color: var(--lime-dark);
+    line-height: 1;
+  }
+
+  .doodle-wrap {
+    width: 44px;
+    height: 44px;
+    color: var(--lime-dark);
+  }
+
+  .belief-text {
+    font-size: clamp(20px, 1.8vw, 24px);
+    line-height: 1.25;
+    color: var(--ink);
+  }
+
+  .belief-note {
+    color: var(--ink-muted);
+    font-size: 17px;
+    margin-top: auto;
+  }
+
+  @media (max-width: 900px) {
+    .beliefs-grid {
+      grid-template-columns: 1fr;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+    .belief-card {
+      transform: rotate(0deg) !important;
+    }
+  }
+</style>

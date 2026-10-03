@@ -1,0 +1,146 @@
+---
+import { experiments } from '../data/content.js';
+import FloatingDoodle from './FloatingDoodle.astro';
+---
+
+<section id="experiments" class="section">
+  <!-- Surrounding Floating Doodles -->
+  <FloatingDoodle name="flask" top="-40px" left="20px" w={84} dur={7} rot={-8} />
+  <FloatingDoodle name="robot" top="-60px" right="40px" w={90} dur={9} rot={6} />
+  <FloatingDoodle name="map" bottom="-50px" left="60px" w={80} dur={8} rot={-5} />
+
+  <div class="container">
+    <div class="section-head" data-reveal style="--i:1">
+      <span class="kicker">
+        <span>playground & CLI tools</span>
+        <span class="mono">// 04</span>
+      </span>
+      <h2 class="display">Lab <em>Experiments.</em></h2>
+      <p class="sub blurb">Systems built from first principles — logs, shells, compilers, and protocols.</p>
+    </div>
+
+    <!-- Grid of lighter experiment entries -->
+    <div class="experiments-grid">
+      {experiments.map((exp, idx) => (
+        <article
+          class="exp-card paper graph"
+          data-reveal
+          style={`--i: ${idx + 2};`}
+        >
+          <div class="exp-header">
+            <h3 class="exp-title serif">{exp.title}</h3>
+            <span class="exp-role hand">{exp.role}</span>
+          </div>
+
+          <p class="exp-stack mono">{exp.stack}</p>
+          <p class="exp-summary">{exp.summary}</p>
+
+          <!-- Mock terminal preview block -->
+          <div class="terminal-box mono">
+            <div class="term-line prompt">
+              <span class="user-prompt">$</span> {exp.cmd}
+            </div>
+            {exp.out.map((line) => (
+              <div class="term-line output">{line}</div>
+            ))}
+          </div>
+
+          <div class="exp-footer">
+            <a href={exp.href} target="_blank" rel="noopener noreferrer" class="link-hand">
+              view source →
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  #experiments {
+    position: relative;
+  }
+
+  .experiments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: clamp(20px, 3vw, 32px);
+  }
+
+  .exp-card {
+    padding: 24px;
+    border: 1px solid rgba(20, 24, 31, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: transform var(--dur) var(--ease-spring), box-shadow var(--dur) var(--ease-out);
+  }
+
+  .exp-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: var(--shadow-lift);
+    z-index: 4;
+  }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .exp-title {
+    font-size: 24px;
+    color: var(--ink);
+  }
+
+  .exp-role {
+    color: var(--lime-dark);
+    font-size: 19px;
+  }
+
+  .exp-stack {
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+
+  .exp-summary {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+
+  .terminal-box {
+    background: #0d1117;
+    color: #e9ede3;
+    padding: 12px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-top: 4px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .term-line.prompt {
+    color: #b8f25b;
+  }
+
+  .user-prompt {
+    color: #5b7cff;
+    user-select: none;
+  }
+
+  .term-line.output {
+    color: #a3acb8;
+  }
+
+  .exp-footer {
+    margin-top: auto;
+    padding-top: 8px;
+  }
+
+  @media (max-width: 640px) {
+    .experiments-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,122 @@
+---
+import Nav from '../components/Nav.astro';
+import SideRails from '../components/SideRails.astro';
+import HeroNotebook from '../components/HeroNotebook.astro';
+import Beliefs from '../components/Beliefs.astro';
+import About from '../components/About.astro';
+import LabLog from '../components/LabLog.astro';
+import Work from '../components/Work.astro';
+import Experiments from '../components/Experiments.astro';
+import Trophies from '../components/Trophies.astro';
+import Writing from '../components/Writing.astro';
+import Bookshelf from '../components/Bookshelf.astro';
+import Connect from '../components/Connect.astro';
+import FloatingDoodle from '../components/FloatingDoodle.astro';
+import { site } from '../data/content.js';
+
+import '../styles/global.css';
+---
+
+<!html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{site.title}</title>
+    <meta name="description" content={site.description} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={site.title} />
+    <meta property="og:description" content={site.description} />
+    <meta property="og:image" content="/images/transformer.jpg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={site.title} />
+    <meta name="twitter:description" content={site.description} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Reenie+Beanie&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="page">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <!-- Sticky Navigation -->
+    <Nav />
+
+    <!-- Fixed Decorative Side Rails -->
+    <SideRails />
+
+    <!-- Floating Chalk Doodles in Dark Margins -->
+    <FloatingDoodle name="catLaptop" top="280px" left="20px" w={110} dur={9} rot={-6} hide="wide" />
+    <FloatingDoodle name="plane" top="650px" right="25px" w={96} dur={7} rot={8} hide="wide" />
+    <FloatingDoodle name="duck" top="1400px" left="25px" w={88} dur={10} rot={4} hide="wide" />
+    <FloatingDoodle name="chip" top="2100px" right="30px" w={90} dur={8} rot={-10} hide="wide" />
+    <FloatingDoodle name="bird" top="3100px" left="30px" w={86} dur={7} rot={5} hide="wide" />
+    <FloatingDoodle name="flower" top="4200px" right="20px" w={92} dur={9} rot={-4} hide="wide" />
+
+    <!-- SVG Texture & Rough Stroke Filters -->
+    <svg style="display: none;" aria-hidden="true">
+      <defs>
+        <!-- Standard rough stroke filter -->
+        <filter id="rough" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" result="noise" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+        <!-- Finer rough filter for small icons -->
+        <filter id="rough-sm" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.08" numOctaves="2" result="noise" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+        <!-- Chalk stroke filter -->
+        <filter id="chalk" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="turbulence" baseFrequency="0.12" numOctaves="3" result="noise" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.8" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+
+    <main id="main-content">
+      <!-- 1. HERO (Open notebook card) -->
+      <HeroNotebook />
+
+      <!-- 2. BELIEFS (3 taped rotated cards) -->
+      <Beliefs />
+
+      <!-- 3. ABOUT (Bio, polaroids, skill stickers) -->
+      <About />
+
+      <!-- 4. LAB LOG (Ruled notebook experience timeline) -->
+      <LabLog />
+
+      <!-- 5. WORK (Spiral-bound selected work notebook) -->
+      <Work />
+
+      <!-- 6. EXPERIMENTS (CLI tools & lab projects) -->
+      <Experiments />
+
+      <!-- 7. TROPHIES (Gold medal & hackathon wins) -->
+      <Trophies />
+
+      <!-- 8. WRITING (Publications & Medium articles) -->
+      <Writing />
+
+      <!-- 9. BOOKSHELF (Hand-drawn book spines & Goodreads reviews) -->
+      <Bookshelf />
+
+      <!-- 10. CONNECT / FOOTER -->
+      <Connect />
+    </main>
+
+    <!-- Client-side script -->
+    <script src="../scripts/motion.js"></script>
+  </body>
+</html>
